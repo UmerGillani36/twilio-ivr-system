@@ -1,21 +1,29 @@
 /**
  * Main entry point for the Twilio IVR System
  */
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const config = require('./config');
 const ivrRoutes = require('./routes/ivr');
 const errorHandler = require('./middlewares/errorHandler');
-
+const requestLogger = require('./middlewares/requestLogger');
+const validateTwilioRequest = require('./middlewares/twilioValidator');
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(requestLogger);
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.originalUrl}`);
+  next();
+});
 
 // Routes
 app.use('/ivr', ivrRoutes);

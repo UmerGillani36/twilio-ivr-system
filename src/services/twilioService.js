@@ -3,11 +3,12 @@
  * Handles interactions with the Twilio API
  */
 const twilio = require('twilio');
+const config = require('../config');
 
 // Initialize Twilio client
 const client = twilio(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN
+  config.twilio.accountSid,
+  config.twilio.authToken
 );
 
 /**
@@ -31,10 +32,10 @@ const getRecordingDetails = async (recordingSid) => {
  */
 const getPhoneNumberForDigit = (digit) => {
   const phoneMap = {
-    '1': process.env.TWILIO_ENGLISH_NUMBER,
-    '2': process.env.TWILIO_HAITIAN_NUMBER,
-    '3': process.env.TWILIO_SPANISH_NUMBER,
-    '0': process.env.TWILIO_SUPPORT_NUMBER
+    '1': config.twilio.phoneNumbers.english,
+    '2': config.twilio.phoneNumbers.haitian,
+    '3': config.twilio.phoneNumbers.spanish,
+    '0': config.twilio.phoneNumbers.support
   };
 
   return phoneMap[digit] || null;
@@ -50,7 +51,7 @@ const validateRequest = (req) => {
   const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
   
   return twilio.validateRequest(
-    process.env.TWILIO_AUTH_TOKEN,
+    config.twilio.authToken,
     twilioSignature,
     url,
     req.body

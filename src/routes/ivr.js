@@ -4,8 +4,11 @@
  */
 const express = require('express');
 const router = express.Router();
-const ivrController = require('../controllers/ivrController');
+// In src/routes/ivr.js
+const ivrController = require('../controllers/ivrController')
+const validateTwilioRequest = require('../middlewares/twilioValidator');
 
+// router.use(validateTwilioRequest);
 /**
  * POST /ivr/voice
  * Entry point for incoming calls

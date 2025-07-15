@@ -3,28 +3,30 @@
  * Builds TwiML responses for different IVR scenarios
  */
 const { VoiceResponse } = require('twilio').twiml;
+const config = require('../config');
 
 /**
  * Creates the welcome menu TwiML
  * @returns {string} TwiML string
  */
 const welcomeMenu = () => {
+  console.log('Welcome is Called');
   const twiml = new VoiceResponse();
-  
+  twiml.say('Welcome to the IVR system.');
   const gather = twiml.gather({
     numDigits: 1,
     action: '/ivr/menu',
     method: 'POST',
-    timeout: 10
+    timeout: 10,
   });
-  
+
   gather.say(
     'Press 1 for English, 2 for Haitian Creole, 3 for Spanish, 0 for Support, or 9 to leave a voicemail.'
   );
 
   // If no input is received, repeat the menu
   twiml.redirect('/ivr/voice');
-  
+
   return twiml.toString();
 };
 
@@ -35,14 +37,17 @@ const welcomeMenu = () => {
  */
 const dialNumber = (phoneNumber) => {
   const twiml = new VoiceResponse();
-  
-  twiml.dial({
-    callerId: process.env.TWILIO_PHONE_MAIN
-  }, phoneNumber);
-  
+
+  twiml.dial(
+    {
+      callerId: config.twilio.phoneNumbers.main,
+    },
+    phoneNumber
+  );
+
   // If the call fails or ends, redirect to the main menu
   twiml.redirect('/ivr/voice');
-  
+
   return twiml.toString();
 };
 
