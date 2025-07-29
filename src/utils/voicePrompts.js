@@ -21,7 +21,7 @@ const welcomeMenu = () => {
   });
 
   gather.say(
-    'To continue in English, press 1, Pou kontinye an Kreyòl Ayisyen, peze 2. Para continuar en Español, presiona 3. For support, press 0. For other languages, please stay on the line!'
+    'To continue in English, press 1, Pou kontinye an Kreyòl Ayisyen, peze 2. Para continuar en Español, presiona 3. For support, press 0. For other languages, Press 9 to leave a voicemail, or stay on the line to return to the main menu.'
   );
 
   // If no input is received, repeat the menu
@@ -58,7 +58,7 @@ const dialNumber = (phoneNumber) => {
 const recordVoicemail = () => {
   const twiml = new VoiceResponse();
   
-  twiml.say('Our agent are currently assisting other customer please stay on the line for the next available if you want to request a call back, please press 9 and leave your name and phone numbers');
+  twiml.say('Our agent are currently assisting other customer please stay on the line for the next available if you want to request a call back, please Press 9 to leave a voicemail.');
   
   twiml.record({
     action: '/ivr/voicemail-complete',
