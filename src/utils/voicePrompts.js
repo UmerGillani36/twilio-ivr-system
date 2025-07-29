@@ -12,7 +12,7 @@ const config = require('../config');
 const welcomeMenu = () => {
   console.log('Welcome is Called');
   const twiml = new VoiceResponse();
-  twiml.say('Welcome to the IVR system.');
+  twiml.say('Thank you for calling Ibridgge TRANSLATION, We prioritize your experience, We may record this call');
   const gather = twiml.gather({
     numDigits: 1,
     action: '/ivr/menu',
@@ -21,7 +21,7 @@ const welcomeMenu = () => {
   });
 
   gather.say(
-    'Press 1 for English, 2 for Haitian Creole, 3 for Spanish, 0 for Support, or 9 to leave a voicemail.'
+    'To continue in English, press 1, Pou kontinye an Kreyòl Ayisyen, peze 2. Para continuar en Español, presiona 3. For support, press 0. For other languages, please stay on the line!'
   );
 
   // If no input is received, repeat the menu
@@ -58,7 +58,7 @@ const dialNumber = (phoneNumber) => {
 const recordVoicemail = () => {
   const twiml = new VoiceResponse();
   
-  twiml.say('Please leave your message after the beep. Press any key or stop talking to end the recording.');
+  twiml.say('Our agent are currently assisting other customer please stay on the line for the next available if you want to request a call back, please press 9 and leave your name and phone numbers');
   
   twiml.record({
     action: '/ivr/voicemail-complete',
